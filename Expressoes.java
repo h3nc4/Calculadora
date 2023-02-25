@@ -41,7 +41,7 @@ public class Expressoes {
 	 * @return Resultado da expressao
 	 * @throws Exception Erro na pilha
 	 */
-	public double calculaPolones(String[] in) throws Exception {
+	private double calculaPolones(String[] in) throws Exception {
 		Pilha<Double> p = new Pilha<Double>();
 		for (String strIn : in)
 			if (strIn.equals("+"))
@@ -72,7 +72,7 @@ public class Expressoes {
 	 * @param i Operador
 	 * @return Peso do operador
 	 */
-	public int peso(char i) {
+	private int peso(char i) {
 		return (i == '(') ? 0 : (i == '+' || i == '-') ? 1 : (i == '*' || i == '/') ? 2 : 3;
 	}
 
@@ -93,7 +93,7 @@ public class Expressoes {
 				while (!p.topo().equals("("))
 					saida.append(p.desempilhar()).append(" ");
 				p.desempilhar();
-			} else if (i.matches("-?[0-9]+")) // se for um numero, adiciona a saida
+			} else if (i.matches("[0-9]")) // se for um numero, adiciona a saida
 				saida.append(i + " ");
 			else { // se for um operador, desempilha ate encontrar um operador de menor peso
 				while (!p.estaVazia() && peso(p.topo().charAt(0)) >= peso(i.charAt(0)))
@@ -112,7 +112,7 @@ public class Expressoes {
 	 * @param str Expressao a ser verificada
 	 * @return true se a expressao estiver bem formada, false caso contrario
 	 */
-	public boolean bemFormada(String str) {
+	private boolean bemFormada(String str) {
 		Pilha<Character> p = new Pilha<Character>();
 		for (char c : str.toCharArray())
 			if (c == '(') // Sendo parenteses, empilha
@@ -127,9 +127,16 @@ public class Expressoes {
 		return p.estaVazia(); // Se a pilha estiver vazia, a expressao esta bem formada
 	}
 
+	/**
+	 * Calcula uma expressao matematica
+	 * 
+	 * @param in Expressao matematica
+	 * @return Resultado da expressao
+	 * @throws Exception Erro na pilha
+	 */
 	public double resultado(String in) throws Exception {
 		if (!bemFormada(in)) // Verifica se a expressao esta bem formada
-			throw new Exception();
+			throw new Exception(" Expressao mal formada");
 		return calculaPolones( //
 				paraPolones( //
 						in.replaceAll("[^\\d\\-+/*()^]", "") // Mantem apenas os numeros e operadores
@@ -142,13 +149,13 @@ public class Expressoes {
 	public static void main(String[] args) {
 		BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
 		Expressoes calc = new Expressoes();
-		while (true) {
+		while (true)
 			try {
 				System.out.println(calc.resultado(input.readLine()));
 			} catch (Exception e) {
-				System.out.println(" Expressao mal formada");
+				System.out.print(" Expressao invalida: ");
+				System.out.println(e.getMessage());
 			}
-		}
 	}
 
 }
