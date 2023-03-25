@@ -22,33 +22,25 @@
  * SOFTWARE.
 */
 
-package calculadora;
-
-import static org.junit.Assert.assertThrows;
-import static org.junit.Assert.assertTrue;
-import org.junit.jupiter.api.Test;
-
 /**
- * Testes unitarios
+ * Classe Celula
  * 
  * @author Henrique Almeida
  */
-class Testing {
+class Celula<E> {
 
-	@Test
-	void test() throws Exception {
-		Expressoes calc = new Expressoes();
-		String[] excp = { "", " ", "2+", "^2", "2/3)", "(2*3", "(2+3)*4/(5" }; // expressoes invalidas
-		String[] expn = { "2", "2+2", "2-2", "2^2", "2/3", "(2*3)",
-				"(2+3)*4/(5-2)", "(20-70)*160/(50-20)^2", "4/0" }; // expressoes validas
-		double[] res = { 2, 4, 0, 4, 0.6666666666666666, 6,
-				6.666666666666667, -8.88888888888889, Double.POSITIVE_INFINITY }; // resultados esperados
-		for (String i : excp)
-			assertThrows(Throwable.class, () -> {
-				calc.resultado(i); // verifica se as excecoes estao sendo lancadas
-			});
-		for (int i = 0; i < expn.length; i++)
-			assertTrue(calc.resultado(expn[i]) == res[i]); // compara o resultado com o esperado
+	E item;
+	Celula<E> anterior;
+
+	/**
+	 * Construtor da classe Celula
+	 * 
+	 * @param valor      Valor a ser armazenado
+	 * @param itemPrevio Celula anterior
+	 */
+	Celula(E valor, Celula<E> itemPrevio) {
+		item = valor;
+		anterior = itemPrevio;
 	}
 
 }

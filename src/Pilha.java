@@ -22,8 +22,6 @@
  * SOFTWARE.
 */
 
-package calculadora;
-
 /**
  * Classe Pilha
  * 
@@ -41,11 +39,11 @@ class Pilha<e> {
 	}
 
 	/**
-	 * Verifica se a pilha esta vazia
+	 * Verifica se a pilha está vazia
 	 * 
 	 * @return true se a pilha estiver vazia, false caso contrario
 	 */
-	public boolean estaVazia() {
+	public boolean está_vazia() {
 		return topo.item == null;
 	}
 
@@ -62,11 +60,11 @@ class Pilha<e> {
 	 * Remove um item da pilha
 	 * 
 	 * @return Item removido
-	 * @throws Exception Pilha vazia
+	 * @throws IllegalArgumentException Pilha vazia
 	 */
-	public e desempilhar() throws Exception {
-		if (estaVazia())
-			throw new Exception("Pilha vazia");
+	public e desempilhar() throws IllegalArgumentException {
+		if (está_vazia())
+			throw new IllegalArgumentException("Pilha vazia");
 		e retorno = topo.item; // guarda o item do topo
 		topo = topo.anterior; // atualiza o topo
 		return retorno;
@@ -76,11 +74,11 @@ class Pilha<e> {
 	 * Retorna o item do topo da pilha
 	 * 
 	 * @return Item do topo da pilha
-	 * @throws Exception Pilha vazia
+	 * @throws IllegalArgumentException Pilha vazia
 	 */
-	public e topo() throws Exception {
-		if (estaVazia())
-			throw new Exception("Pilha vazia");
+	public e topo() throws IllegalArgumentException {
+		if (está_vazia())
+			throw new IllegalArgumentException("Pilha vazia");
 		return topo.item;
 	}
 

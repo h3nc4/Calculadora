@@ -1,3 +1,4 @@
+
 /** 
  * MIT License
  *
@@ -22,27 +23,42 @@
  * SOFTWARE.
 */
 
-package calculadora;
+import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertTrue;
+import org.junit.jupiter.api.Test;
 
 /**
- * Classe Celula
+ * Testes unitarios
  * 
  * @author Henrique Almeida
  */
-class Celula<E> {
+class Tests {
 
-	E item;
-	Celula<E> anterior;
+	private String[] excp = { "", " ", "2+", "^2", "2/3)", "(2*3", "(2+3)*4/(5" }; // expressões inválidas
+
+	private String[] expn = { "2", "2+2", "2-2", "2^2", "2/3", "(2*3)",
+			"(2+3)*4/(5-2)", "(20-70)*160/(50-20)^2", "4/0" }; // expressões válidas
+
+	private double[] res = { 2, 4, 0, 4, 0.6666666666666666, 6,
+			6.666666666666667, -8.88888888888889, Double.POSITIVE_INFINITY }; // resultados esperados para as
+																				// expressões válidas
 
 	/**
-	 * Construtor da classe Celula
-	 * 
-	 * @param valor      Valor a ser armazenado
-	 * @param itemPrevio Celula anterior
+	 * Verifica se as expressões inválidas geram exceção
 	 */
-	Celula(E valor, Celula<E> itemPrevio) {
-		item = valor;
-		anterior = itemPrevio;
+	@Test
+	void invalid_input() {
+		for (String i : excp)
+			assertThrows(Throwable.class, () -> Calculadora.resultado(i));
+	}
+
+	/**
+	 * Verifica se as expressões válidas geram o resultado esperado
+	 */
+	@Test
+	void valid_input() {
+		for (int i = 0; i < expn.length; i++)
+			assertTrue(res[i] == Calculadora.resultado(expn[i])); // compara o resultado com o esperado
 	}
 
 }
